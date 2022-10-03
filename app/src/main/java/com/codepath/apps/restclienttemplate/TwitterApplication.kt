@@ -15,7 +15,7 @@ import com.facebook.stetho.Stetho
 *     // use client to send requests to API
 *
 */
-class RestApplication : Application() {
+class TwitterApplication : Application() {
 
     var myDatabase: MyDatabase? = null
 
@@ -33,8 +33,8 @@ class RestApplication : Application() {
     }
 
     companion object {
-        fun getRestClient(context: Context): RestClient {
-            return OAuthBaseClient.getInstance(RestClient::class.java, context) as RestClient
+        fun getRestClient(context: Context): TwitterClient {
+            return OAuthBaseClient.getInstance(TwitterClient::class.java, context) as TwitterClient
         }
     }
 }

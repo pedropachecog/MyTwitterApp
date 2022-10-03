@@ -5,7 +5,7 @@ import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.codepath.oauth.OAuthBaseClient
 import com.github.scribejava.apis.FlickrApi
-import com.github.scribejava.core.builder.api.BaseApi
+import com.github.scribejava.apis.TwitterApi
 
 /*
  *
@@ -19,7 +19,7 @@ import com.github.scribejava.core.builder.api.BaseApi
  * NOTE: You may want to rename this object based on the service i.e TwitterClient or FlickrClient
  *
  */
-class RestClient(context: Context) : OAuthBaseClient(
+class TwitterClient(context: Context) : OAuthBaseClient(
     context, REST_API_INSTANCE, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET,
     null, String.format(
         REST_CALLBACK_URL_TEMPLATE,
@@ -31,9 +31,9 @@ class RestClient(context: Context) : OAuthBaseClient(
 ) {
 
     companion object {
-        val REST_API_INSTANCE = FlickrApi.instance(FlickrApi.FlickrPerm.WRITE) // Change this
+        val REST_API_INSTANCE = TwitterApi.instance()
 
-        const val REST_URL = "https://api.flickr.com/services" // Change this, base API URL
+        const val REST_URL = "https://api.twitter.com/1.1" // Change this, base API URL
 
         const val REST_CONSUMER_KEY =
             BuildConfig.CONSUMER_KEY // Change this inside apikey.properties
