@@ -4,7 +4,6 @@ import android.content.Context
 import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.codepath.oauth.OAuthBaseClient
-import com.github.scribejava.apis.FlickrApi
 import com.github.scribejava.apis.TwitterApi
 
 /*
@@ -52,14 +51,18 @@ class TwitterClient(context: Context) : OAuthBaseClient(
 
     // CHANGE THIS
     // DEFINE METHODS for different API endpoints here
-    fun getInterestingnessList(handler: JsonHttpResponseHandler) {
+    fun getHomeTimeline(handler: JsonHttpResponseHandler) {
         val apiUrl =
-            getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList")
+//            getApiUrl("users/:id/timelines/reverse_chronological")
+
+        getApiUrl("statuses/home_timeline.json")
 
         // Can specify query string params directly or through RequestParams.
         val params = RequestParams()
-        params.put("format", "json")
+        params.put("count",25)
         client.get(apiUrl, params, handler)
+
+
     }
 
     /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

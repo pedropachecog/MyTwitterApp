@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -33,9 +34,10 @@ class LoginActivity : OAuthLoginActionBarActivity<TwitterClient>() {
     // OAuth authenticated successfully, launch primary authenticated activity
     // i.e Display application "homepage"
     override fun onLoginSuccess() {
-        // val i = Intent(this, PhotosActivity::class.java)
-        // startActivity(i)
         Log.i(TAG, "Great success in logging!!")
+         val i = Intent(this, TimelineActivity::class.java)
+         startActivity(i)
+
     }
 
     // OAuth authentication flow failed, handle the error
