@@ -24,7 +24,7 @@ class Tweet {
         // object
         fun fromJsonArray(jsonArray: JSONArray): List<Tweet>{
             val tweets = ArrayList<Tweet>()
-            for (i in 0..jsonArray.length()){
+            for (i in 0 until jsonArray.length()){
                 tweets.add(fromJson(jsonArray.getJSONObject(i)))
             }
             return tweets
