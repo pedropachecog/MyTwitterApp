@@ -10,14 +10,17 @@ private const val TAG = "TimelineActivityTwit"
 
 class TimelineActivity : AppCompatActivity() {
 
+    // mm Defining the client variable
     lateinit var client: TwitterClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
 
+        // mm Initialize client variable
         client=TwitterApplication.getRestClient(this)
 
+        // mm Calling the method to load data
         populateHomeTimeline()
 
     }
