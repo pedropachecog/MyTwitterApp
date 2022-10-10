@@ -27,10 +27,24 @@ android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvTweetBody"
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/ivProfileImage"
         android:layout_below="@id/tvUsername"
-        android:text="I wonder if the API lets us delete tweets already. In any case, we will not worry about that right now." />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@id/ivProfileImage"
+        android:text="I wonder if the API lets us edit tweets already. In any case, we will not worry about that right now." />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_toEndOf="@id/tvUsername"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewEnd"
+        android:text="1m" />
 </RelativeLayout>
