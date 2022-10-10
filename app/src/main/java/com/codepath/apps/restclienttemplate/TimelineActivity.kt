@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -100,8 +101,6 @@ class TimelineActivity : AppCompatActivity() {
 
                     val jsonArray = json.jsonArray
                     try{
-//                        // Clear out currently fetched tweets
-//                        adapter.clear()
                         val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
                         tweets.addAll(listOfNewTweetsRetrieved)
                         adapter.notifyDataSetChanged()
@@ -128,7 +127,10 @@ class TimelineActivity : AppCompatActivity() {
     // Handles click on menu item
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.Compose){
-            Toast.makeText(this, "Ready to compose tweete¡", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Ready to compose tweete¡ ", Toast.LENGTH_SHORT).show()
+            // Navigate to compose screen
+            val intent = Intent(this, ComposeActivity:: class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }
