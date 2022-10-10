@@ -15,6 +15,7 @@ The following **required** functionality is completed:
   - [x] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
 
 - [x] User can refresh tweets timeline by pulling down to refresh
+
   The following **optional** features are implemented:
 
 - [x] User can view more tweets as they scroll with infinite pagination
@@ -32,15 +33,12 @@ The following **required** functionality is completed:
 - [ ] User can open the twitter app offline and see last loaded tweets
 
 - [ ] On the Twitter timeline, leverage the CoordinatorLayout to apply scrolling behavior that hides / shows the toolbar.
-  The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
   
   ## Video Walkthrough
   
   Here's a walkthrough of implemented user stories:
   
-  <img title="Video Walkthrough" src="demot1.gif" alt="Video Walkthrough" width="">
+  <img title="Video Walkthrough" src="demot1.gif" width="300" alt="Video Walkthrough" width="">
   
   GIF created with [LiceCap](http://www.cockos.com/licecap/).
   
