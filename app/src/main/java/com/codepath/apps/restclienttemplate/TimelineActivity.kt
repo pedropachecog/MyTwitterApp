@@ -1,8 +1,8 @@
 package com.codepath.apps.restclienttemplate
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -10,6 +10,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
 import org.json.JSONException
+
 
 private const val TAG = "TimelineActivityTwit"
 
@@ -23,7 +24,12 @@ class TimelineActivity : AppCompatActivity() {
 
     lateinit var swipeContainer : SwipeRefreshLayout
 
+    var maxid : Long = 0
+
     val tweets = ArrayList<Tweet>()
+
+    // Store a member variable for the listener
+    private var scrollListener: EndlessRecyclerViewScrollListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +57,63 @@ class TimelineActivity : AppCompatActivity() {
         // mm send Tweet list to adapter
         adapter = TweetsAdapter(tweets)
 
-        rvTweets.layoutManager = LinearLayoutManager(this)
+        var linearLayoutManager = LinearLayoutManager(this)
+        rvTweets.layoutManager = linearLayoutManager
         rvTweets.adapter = adapter
+
+        // mm Creates endless scroll listener
+        scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadMoreData();
+            }
+        }
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
 
         // mm Calling the method to load data
         populateHomeTimeline()
 
+    }
+
+    private fun loadMoreData() {
+        maxid -= 1
+        client.getNextPageOfTweets(object: JsonHttpResponseHandler(){
+                override fun onFailure(
+                    statusCode: Int,
+                    headers: Headers?,
+                    response: String?,
+                    throwable: Throwable?
+                ) {
+                    Log.e(TAG, "Timeline adding error: $statusCode")
+                }
+
+                override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON) {
+                    Log.i(TAG, "Timeline added successfully: $json")
+                    Log.i(TAG, "OnSuccess!")
+
+                    // Get Json and turn it into a list of tweets
+
+                    val jsonArray = json.jsonArray
+                    try{
+//                        // Clear out currently fetched tweets
+//                        adapter.clear()
+                        val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
+                        tweets.addAll(listOfNewTweetsRetrieved)
+                        adapter.notifyDataSetChanged()
+                        maxid = findMinId(tweets)
+                        // Now we call setRefreshing(false) to signal refresh has finished
+                        swipeContainer.setRefreshing(false)
+
+                    } catch (e: JSONException){
+                        Log.e(TAG, "JSON Exception: $statusCode")
+                    }
+
+
+                }
+
+            },  maxid)
     }
 
     fun populateHomeTimeline(){
@@ -71,7 +128,7 @@ class TimelineActivity : AppCompatActivity() {
             }
 
             override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON) {
-//                Log.i(TAG, "Timeline populated successfully: $json")
+                Log.i(TAG, "Timeline populated successfully: $json")
                 Log.i(TAG, "OnSuccess!")
 
                 // Get Json and turn it into a list of tweets
@@ -82,6 +139,7 @@ class TimelineActivity : AppCompatActivity() {
                     adapter.clear()
                     val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
                     tweets.addAll(listOfNewTweetsRetrieved)
+                    maxid = findMinId(tweets)
                     adapter.notifyDataSetChanged()
                     // Now we call setRefreshing(false) to signal refresh has finished
                     swipeContainer.setRefreshing(false)
@@ -94,5 +152,15 @@ class TimelineActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun findMinId(tweets: ArrayList<Tweet>): Long {
+        if (tweets.size == 0) return 0
+        var minid = tweets[0].id
+        for (tweet in tweets){
+            if (tweet.id < minid)
+                minid = tweet.id
+        }
+        return minid
     }
 }

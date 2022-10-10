@@ -9,6 +9,7 @@ class Tweet {
     var body: String = ""
     var createdAt: String = ""
     var user: User? = null
+    var id: Long = 0
 
     companion object{
 
@@ -18,6 +19,7 @@ class Tweet {
             tweet.body = jsonObject.getString("text")
             tweet.createdAt = getFormattedTimeStamp(jsonObject.getString("created_at"))
             tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+            tweet.id = jsonObject.getString("id").toLong()
             return tweet
         }
 
