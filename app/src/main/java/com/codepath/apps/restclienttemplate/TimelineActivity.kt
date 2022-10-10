@@ -2,6 +2,9 @@ package com.codepath.apps.restclienttemplate
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -86,11 +89,11 @@ class TimelineActivity : AppCompatActivity() {
                     response: String?,
                     throwable: Throwable?
                 ) {
-                    Log.e(TAG, "Timeline adding error: $statusCode")
+                    Log.e(TAG, "Loading more tweets error: $statusCode")
                 }
 
                 override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON) {
-                    Log.i(TAG, "Timeline added successfully: $json")
+                    Log.i(TAG, "More tweets loaded successfully: $json")
                     Log.i(TAG, "OnSuccess!")
 
                     // Get Json and turn it into a list of tweets
@@ -114,6 +117,20 @@ class TimelineActivity : AppCompatActivity() {
                 }
 
             },  maxid)
+    }
+
+    // TODO
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    // Handles click on menu item
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.Compose){
+            Toast.makeText(this, "Ready to compose tweete¡", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun populateHomeTimeline(){
