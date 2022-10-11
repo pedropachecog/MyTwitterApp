@@ -64,6 +64,19 @@ class TwitterClient(context: Context) : OAuthBaseClient(
 
 
     }
+    fun publishTweet(tweetContent: String, handler: JsonHttpResponseHandler) {
+        val apiUrl =
+//            getApiUrl("users/:id/timelines/reverse_chronological")
+
+            getApiUrl("statuses/update.json")
+
+        // Can specify query string params directly or through RequestParams.
+        val params = RequestParams()
+        params.put("status",tweetContent)
+        client.post(apiUrl, params, "", handler)
+
+
+    }
 
     /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json")

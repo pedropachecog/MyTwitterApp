@@ -1,5 +1,7 @@
 package com.codepath.apps.restclienttemplate
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,7 @@ import org.json.JSONException
 
 
 private const val TAG = "TimelineActivityTwit"
+private const val REQUEST_CODE = 10
 
 class TimelineActivity : AppCompatActivity() {
 
@@ -45,6 +48,10 @@ class TimelineActivity : AppCompatActivity() {
         rvTweets = findViewById(R.id.rvTweets)
 
         swipeContainer = findViewById(R.id.swipeContainer)
+
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+
+        getSupportActionBar()?.setIcon(R.drawable.ic_twitter_foreground)
 
         swipeContainer.setOnRefreshListener {
             Log.i(TAG, "Refreshing timelein")
@@ -130,10 +137,29 @@ class TimelineActivity : AppCompatActivity() {
 //            Toast.makeText(this, "Ready to compose tweete¡ ", Toast.LENGTH_SHORT).show()
             // Navigate to compose screen
             val intent = Intent(this, ComposeActivity:: class.java)
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE)
         }
         return super.onOptionsItemSelected(item)
     }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode : Int, data : Intent?) {
+        // If the user comes back to this activity from EditActivity
+        // with no error or cancellation
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+
+            // Get the data passed from EditActivity
+            val tweet = data?.getParcelableExtra("Tweet") as Tweet
+
+            // update timeline
+            // modifying data source of tweets
+            tweets.add(0, tweet)
+            //update adapter
+            adapter.notifyItemInserted(0)
+            rvTweets.smoothScrollToPosition(0)
+        }
+    }
+
 
     fun populateHomeTimeline(){
         client.getHomeTimeline(object: JsonHttpResponseHandler(){
@@ -172,6 +198,9 @@ class TimelineActivity : AppCompatActivity() {
 
         })
     }
+
+
+
 
     private fun findMinId(tweets: ArrayList<Tweet>): Long {
         if (tweets.size == 0) return 0
