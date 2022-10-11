@@ -1,14 +1,13 @@
 package com.codepath.apps.restclienttemplate
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -47,11 +46,21 @@ class TimelineActivity : AppCompatActivity() {
 
         rvTweets = findViewById(R.id.rvTweets)
 
+        //add vertical separator a la Twitter
+        rvTweets.addItemDecoration(
+            DividerItemDecoration(
+                rvTweets.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+
         swipeContainer = findViewById(R.id.swipeContainer)
 
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        getSupportActionBar()?.setIcon(R.drawable.ic_twitter_logo_white)
+        getSupportActionBar()?.setDisplayShowTitleEnabled(false);
 
-        getSupportActionBar()?.setIcon(R.drawable.ic_twitter_foreground)
 
         swipeContainer.setOnRefreshListener {
             Log.i(TAG, "Refreshing timelein")

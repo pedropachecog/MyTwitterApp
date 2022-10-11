@@ -15,12 +15,19 @@ class LoginActivity : OAuthLoginActionBarActivity<TwitterClient>() {
 
     var sampleModelDao: SampleModelDao? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         val sampleModel = SampleModel()
         sampleModel.name = "CodePath"
         sampleModelDao = (applicationContext as TwitterApplication).myDatabase?.sampleModelDao()
+
+        // mm Hide App Bar
+        if (supportActionBar != null) {
+            supportActionBar?.hide();
+        }
+
         AsyncTask.execute { sampleModelDao?.insertModel(sampleModel) }
     }
 

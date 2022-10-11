@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style=""
     tools:context=".ComposeActivity">
 
     <EditText
@@ -13,6 +12,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="start|top"
+        android:textColor="@color/secondaryColor"
         android:hint="What's going on?"
         android:layout_margin="20dp"
         android:inputType="textMultiLine"
@@ -26,4 +26,14 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:text="Tweet" />
+
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etTweetCompose"
+        android:layout_marginLeft="20dp"
+        android:text="" />
+
+
 </RelativeLayout>

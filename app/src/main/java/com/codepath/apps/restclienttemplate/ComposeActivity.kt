@@ -1,13 +1,16 @@
 package com.codepath.apps.restclienttemplate
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color.red
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
@@ -17,6 +20,7 @@ class ComposeActivity : AppCompatActivity() {
     val TAG = "ComposeActivityTwit"
     lateinit var etCompose : EditText
     lateinit var btnTweet : Button
+    lateinit var tvCount : TextView
 
     lateinit var  client: TwitterClient
 
@@ -32,6 +36,7 @@ class ComposeActivity : AppCompatActivity() {
         // Get views
         etCompose = findViewById(R.id.etTweetCompose)
         btnTweet = findViewById(R.id.btnTweet)
+        tvCount = findViewById(R.id.tvCount)
 
         client = TwitterApplication.getRestClient(this)
 
@@ -75,11 +80,32 @@ class ComposeActivity : AppCompatActivity() {
 
                     })
 
-                    Toast.makeText(this, tweetContent, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, tweetContent, Toast.LENGTH_SHORT).show()
                 }
         }
 
+        etCompose.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val length: Int = etCompose.length()
+                val convert = length.toString()
+                tvCount.text = convert
+                if (length > 280) {
+                    tvCount.setTextColor(getResources().getColor(R.color.error_red))
+                    btnTweet.isEnabled = false
+                }
+                    else {
+                        tvCount.setTextColor(getResources().getColor(R.color.secondaryColor))
 
+                    btnTweet.isEnabled = true
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+            }
+        })
 
     }
 

@@ -4,6 +4,6 @@
 
     <item android:title="Compose"
         android:id="@+id/Compose"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/ic_composetweet_white"
         app:showAsAction="always"/>
 </menu>
