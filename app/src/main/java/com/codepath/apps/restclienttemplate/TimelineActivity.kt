@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import okhttp3.Headers
 import org.json.JSONException
 
@@ -29,6 +31,7 @@ class TimelineActivity : AppCompatActivity() {
     lateinit var adapter : TweetsAdapter
 
     lateinit var swipeContainer : SwipeRefreshLayout
+//    lateinit var fab : FloatingActionButton
 
     var maxid : Long = 0
 
@@ -134,11 +137,11 @@ class TimelineActivity : AppCompatActivity() {
             },  maxid)
     }
 
-    // TODO
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
+    // Compose button moved to FAB
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.menu_main, menu)
+//        return true
+//    }
 
     // Handles click on menu item
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -219,5 +222,12 @@ class TimelineActivity : AppCompatActivity() {
                 minid = tweet.id
         }
         return minid
+    }
+
+    fun fab(view: View) {
+//            Toast.makeText(this, "Ready to compose tweete¡ ", Toast.LENGTH_SHORT).show()
+            // Navigate to compose screen
+            val intent = Intent(this, ComposeActivity:: class.java)
+            startActivityForResult(intent, REQUEST_CODE)
     }
 }

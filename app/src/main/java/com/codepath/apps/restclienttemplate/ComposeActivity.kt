@@ -47,11 +47,12 @@ class ComposeActivity : AppCompatActivity() {
             // 1. Make sure the tweet isn't empty
 
             if (tweetContent.isEmpty()){
-                Toast.makeText(this, "Empty tweets are no go", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "The tweet is empty", Toast.LENGTH_SHORT).show()
             }else
             // 2. Make sure the tweet is under character count
-                if (tweetContent.length > 140){
-                    Toast.makeText(this, "Tweet too big. 140 characters max.", Toast.LENGTH_SHORT)
+                if (tweetContent.length > 280){
+                    Toast.makeText(this, "Tweet is too long. 280 characters maximum", Toast
+                        .LENGTH_SHORT)
                         .show()
 
                 } else{
